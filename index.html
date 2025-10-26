@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gedungbudayalobar.com</title>
+    <!-- Memuat Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Memuat font Inter --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Menerapkan font Inter sebagai font default */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Menambahkan scroll-smooth untuk perpindahan halaman dan slider */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Menyembunyikan scrollbar untuk slider hero */
+        .hero-scroller::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .hero-scroller {
+            -ms-overflow-style: none;  /* IE dan Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- ===== Header ===== -->
+    <!-- Ukuran header diubah dari h-20 menjadi h-24 untuk mengakomodasi logo yang lebih besar -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Mengubah kontainer utama header menjadi flex-col untuk menumpuk baris atas dan navigasi -->
+            <div class="flex flex-col">
+                
+                <!-- Baris Atas: Logo, Judul, Logo Kanan, dan Tombol Mobile -->
+                <!-- Menambahkan 'relative' untuk positioning absolut judul -->
+                <div class="relative flex justify-between items-center h-24 w-full">
+                    <!-- Grup Logo Kiri (Judul dipindahkan) -->
+                    <div class="flex items-center space-x-3">
+                        <!-- Ukuran logo diubah dari h-16 w-16 menjadi h-20 w-20 -->
+                        <img class="h-20 w-20 flex-shrink-0 object-contain"  
+                             src="asset/logobaru.jpeg" 
+                             onerror="this.src='https://placehold.co/100x100/e11d48/ffffff?text=LOGO+KIRI'; this.onerror=null;"
+                             alt="Logo Kiri">
+                        <!-- Judul <span ...> dipindahkan dari sini -->
+                    </div>
+                    
+                    <!-- Judul Tengah (Diposisikan absolut) -->
+                    <!-- w-1/2 dan text-base di mobile agar tidak tumpang tindih -->
+                    <!-- w-auto dan text-xl di desktop -->
+                    <div class="absolute left-1/2 -translate-x-1/2 w-1/2 md:w-auto text-center px-2">
+                        <span class="font-extrabold text-base md:text-xl text-gray-900 tracking-tight">GEDUNG SENI DAN BUDAYA JAYENGRANA NARMADA</span>
+                    </div>
+
+                    <!-- Grup Kanan: Logo Kanan (Hanya Desktop) dan Tombol Mobile -->
+                    <div class="flex items-center space-x-8"> 
+                        
+                        <!-- Grup Logo Kanan (Desktop) - Dibuat 'berdekatan' -->
+                        <div class="hidden md:flex items-center space-x-2"> <!-- Menggunakan space-x-2 agar berdekatan -->
+                            <!-- Logo Kanan 1 -->
+                            <img class="h-20 w-20 flex-shrink-0 object-contain" 
+                                 src="asset/logo.png" 
+                                 onerror="this.src='https://placehold.co/100x100/e11d48/ffffff?text=LOGO+KANAN'; this.onerror=null;"
+                                 alt="Logo Kanan">
+                            <!-- Logo Kanan 2 (BARU) - Saya gunakan logobaru.jpeg sebagai contoh, silakan ganti 'src' jika perlu -->
+                            <img class="h-20 w-20 flex-shrink-0 object-contain" 
+                                 src="asset/logokan.png" 
+                                 onerror="this.src='https://placehold.co/100x100/e11d48/ffffff?text=LOGO+BARU'; this.onerror=null;"
+                                 alt="Logo Kanan 2">
+                        </div>
+                        
+                        <!-- Tombol Menu Mobile (tetap di kanan untuk mobile) -->
+                        <div class="md:hidden flex items-center">
+                            <button id="mobile-menu-button" class="text-gray-600 hover:text-red-600">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Baris Bawah: Navigasi (Hanya Desktop) -->
+                <div class="hidden md:flex w-full justify-center items-center py-4 border-t border-gray-200">
+                    <nav class="flex space-x-8">
+                        <a href="#konten-utama" class="page-link font-semibold text-gray-700 hover:text-red-600 transition duration-150">Beranda</a>
+                        <a href="#halaman-profil" class="page-link font-semibold text-gray-700 hover:text-red-600 transition duration-150">Profil</a>
+                        <a href="#halaman-warisan" class="page-link font-semibold text-gray-700 hover:text-red-600 transition duration-150">Warisan Budaya</a>
+                        <a href="#halaman-agenda" class="page-link font-semibold text-gray-700 hover:text-red-600 transition duration-150">Agenda</a>
+                        <a href="#halaman-galeri" class="page-link font-semibold text-gray-700 hover:text-red-600 transition duration-150">Galeri</a>
+                        <a href="#halaman-kontak" class="page-link font-semibold text-gray-700 hover:text-red-600 transition duration-150">Kontak</a>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Menu Mobile (Tersembunyi secara default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <a href="#konten-utama" class="page-link block px-6 py-3 text-base font-semibold text-gray-700 hover:bg-gray-100">Beranda</a>
+            <a href="#halaman-profil" class="page-link block px-6 py-3 text-base font-semibold text-gray-700 hover:bg-gray-100">Profil</a>
+            <a href="#halaman-warisan" class="page-link block px-6 py-3 text-base font-semibold text-gray-700 hover:bg-gray-100">Warisan Budaya</a>
+            <a href="#halaman-agenda" class="page-link block px-6 py-3 text-base font-semibold text-gray-700 hover:bg-gray-100">Agenda</a>
+            <a href="#halaman-galeri" class="page-link block px-6 py-3 text-base font-semibold text-gray-700 hover:bg-gray-100">Galeri</a>
+            <a href="#halaman-kontak" class="page-link block px-6 py-3 text-base font-semibold text-gray-700 hover:bg-gray-100">Kontak</a>
+        </div>
+    </header>
+
+    <!-- ===== Hero Scroller ===== -->
+    <!-- Mengganti <section> statis dengan slider horizontal -->
+    <section class="hero-scroller w-full h-[65vh] overflow-x-auto flex snap-x snap-mandatory scroll-smooth">
+        
+        <!-- Slide 1: Selamat Datang -->
+        <div class="flex-shrink-0 w-full h-full snap-center relative bg-cover bg-center" style="background-image: url('asset/gedung.jpg');">
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <div class="text-center text-white p-6 max-w-2xl">
+                    <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Selamat Datang di Gedung Seni dan Budaya Jayengrana Narmada</h1>
+                    <p class="text-xl md:text-2xl font-light mb-8"> menjadi pusat pengembangan, pelestarian, dan promosi seni budaya lokal di Kabupaten Lombok Barat, serta menjadi daya tarik wisata budaya yang dapat meningkatkan perekonomian masyarakat sekitar</p>
+                    <a href="#" class="bg-red-700 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-red-800 transition duration-300">
+                        Jelajahi Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Sambutan Bupati -->
+        <div class="flex-shrink-0 w-full h-full snap-center relative bg-white flex items-center justify-center p-8">
+            <div class="flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto">
+                <img 
+                    src="asset/profil_bupati.png" 
+                    onerror="this.src='https://placehold.co/400x400/cccccc/ffffff?text=Foto+Bupati'; this.onerror=null;"
+                    alt="Foto Bupati" 
+                    class="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-lg border-4 border-red-700">
+                <div class="text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Misi ke III Bupati dan Wakil Bupati Lombok Barat</h2>
+                    <p class="text-lg text-gray-700 mb-4">"Pentingnya pelestarian budaya melalui berbagai kegiatan kebudayaan dan promosi/festival kebudayaan yang bertujuan agar budaya lokal dapat terus diwariskan kepada generasi berikutnya, sesuai dengan Misi III :"Mewujudkan ketahanan keluarga, sosial dan budaya berbasis kearifan lokal".
+
+"</p>
+                    <p class="text-xl font-bold text-red-700"> H. Lalu Ahmad Zaini (LAZ) & Hj. Ummi Nurul Adha</p>
+                    <p class="text-md text-gray-600">Bupati Lombok Barat</p>
+                </div>
+            </div>
+        </div>
+        
+         <!-- Anda bisa menambahkan slide lain di sini -->
+         <!-- 
+         <div class="flex-shrink-0 w-full h-full snap-center bg-gray-300 flex items-center justify-center">
+            <h1 class="text-4xl">Slide 3</h1>
+         </div> 
+         -->
+    </section>
+
+    <!-- ===== Konten Utama ===== --><main id="konten-utama" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        <!-- Section 1: Agenda Budaya --><section class="mb-16">
+            <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-8">Agenda Budaya Terkini</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Kartu Agenda 1 --><div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                    <img class="w-full h-56 object-cover" 
+                         src="asset/berita1.jpg" 
+                         onerror="this.src='https://placehold.co/600x400/cccccc/ffffff?text=Gambar+Event+1'; this.onerror=null;"
+                         alt="Gambar Event 1">
+                    <div class="p-6">
+                        <p class="text-sm text-red-600 font-semibold mb-1">18 September 2025</p>
+                        <h3 class="text-xl font-bold mb-2">Dipusatkan di Gedung Budaya Narmada, Dikbud Lombok Barat Gelar Festival Tunas Bahasa Ibu Tingkat Kabupaten</h3>
+                        <p class="text-gray-600 mb-4 text-base">Dinas Pendidikan dan Kebudayaan (Dikbud) Lombok Barat (Lobar) menggelar Festival Tunas Bahasa Ibu (FTBI)...
+                        </p>
+                        <a href="#halaman-agenda-1" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">Baca Selengkapnya &rarr;</a>
+                    </div>
+                </div>
+                <!-- Kartu Agenda 2 --><div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                    <img class="w-full h-56 object-cover" 
+                         src="asset/berita 2.jpg" 
+                         onerror="this.src='https://placehold.co/600x400/bbbbbb/ffffff?text=Gambar+Event+2'; this.onerror=null;"
+                         alt="Gambar Event 2">
+                    <div class="p-6">
+                        <p class="text-sm text-red-600 font-semibold mb-1">27 September 2025</p>
+                        <h3 class="text-xl font-bold mb-2">Menghadiri Parade Budaya yang dibuka langsung oleh Wakil Ketua Komisi X DPR RI, Bapak H. Lalu Hadrian Irfani, ST., M.Si. (FPKB).</h3>
+                        <p class="text-gray-600 mb-4 text-base">Acara berlangsung di Gedung Seni dan Budaya Narmada, Lombok Barat dengan mengusung tema:
+                                                                “Revitalisasi Budaya Sasak sebagai Modal Sosial Generasi Mendatang.”</p>
+                        <a href="#halaman-agenda-2" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">Baca Selengkapnya &rarr;</a>
+                    </div>
+                </div>
+                <!-- Kartu Agenda 3 --><div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                    <img class="w-full h-56 object-cover" 
+                         src="asset/berita 3.jpg" 
+                         onerror="this.src='https://placehold.co/600x400/dddddd/ffffff?text=Gambar+Event+3'; this.onerror=null;"
+                         alt="Gambar Event 3">
+                    <div class="p-6">
+                        <p class="text-sm text-red-600 font-semibold mb-1">2 oktober 2024</p>
+                        <h3 class="text-xl font-bold mb-2">PENGAMANAN ACARA GSMS DI GEDUNG SENI BUDAYA NARMADA KAB. LOBAR</h3>
+                        <p class="text-gray-600 mb-4 text-base">Gebyar Gerakan Seniman Masuk Sekolah (GSMS) yang telah berlangsung beberapa hari di Gedung seni dan Budaya "jayengrane" Narmada Kabupaten Lombok Barat.</p>
+                        <a href="#halaman-agenda-3" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">Baca Selengkapnya &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Jelajahi Warisan Budaya --><section class="mb-16">
+            <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-8">Jelajahi Warisan Budaya</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Kategori 1 --><a href="#halaman-cagar-budaya" class="page-link group">
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center flex flex-col items-center justify-center h-48 hover:shadow-xl transition-shadow duration-300">
+                        <svg class="h-16 w-16 text-red-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6-4h.01M12 16h.01" />
+                        </svg>
+                        <h3 class="text-lg font-bold group-hover:text-red-700">Cagar Budaya</h3>
+                    </div>
+                </a>
+                <!-- Kategori 2 --><a href="#halaman-warisan-tak-benda" class="page-link group">
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center flex flex-col items-center justify-center h-48 hover:shadow-xl transition-shadow duration-300">
+                         <svg class="h-16 w-16 text-red-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 00-2-2H5z" />
+                        </svg>
+                        <h3 class="text-lg font-bold group-hover:text-red-700">Warisan budaya Tak Benda</h3>
+                    </div>
+                </a>
+                <!-- Kategori 3 --><a href="#halaman-seni-tradisi" class="page-link group">
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center flex flex-col items-center justify-center h-48 hover:shadow-xl transition-shadow duration-300">
+                        <svg class="h-16 w-16 text-red-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10m0-2s-1 2-3 4m3-4s1 2 3 4m0 0s-1 2-3 4m0 0s-1 2-3 4m0 0s-1 2-3 4" />
+                        </svg>
+                        <h3 class="text-lg font-bold group-hover:text-red-700">Seni dan Tradisi Budaya</h3>
+                    </div>
+                </a>
+                <!-- Kategori 4 --><a href="#halaman-kuliner" class="page-link group">
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center flex flex-col items-center justify-center h-48 hover:shadow-xl transition-shadow duration-300">
+                        <svg class="h-16 w-16 text-red-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V5.454c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0c.454.303.977.454 1.5.454v10.092zM15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <h3 class="text-lg font-bold group-hover:text-red-700">Kuliner Tradisional</h3>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 3: Galeri --><section>
+            <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-8">Galeri Budaya</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="rounded-lg shadow-md overflow-hidden h-48 md:h-64">
+                    <img src="asset/galeri1.jpg" alt="Galeri 1" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/999999/ffffff?text=Galeri+1'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-48 md:h-64 md:col-span-2">
+                    <img src="asset/galeri2.jpg" alt="Galeri 2" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/800x400/aaaaaa/ffffff?text=Galeri+2'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-48 md:h-64">
+                    <img src="asset/galeri3.jpg" alt="Galeri 3" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/bbbbbb/ffffff?text=Galeri+3'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-48 md:h-64 md:col-span-2">
+                    <img src="asset/galeri4.jpg" alt="Galeri 4" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/800x400/cccccc/ffffff?text=Galeri+4'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-48 md:h-64">
+                    <img src="asset/galeri5.jpg" alt="Galeri 5" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/dddddd/ffffff?text=Galeri+5'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-48 md:h-64">
+                    <img src="asset/galeri6.jpg" alt="Galeri 6" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/eeeeee/ffffff?text=Galeri+6'; this.onerror=null;">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== HALAMAN ARTIKEL (TERSEMBUNYI) ===== --><!-- Halaman Agenda 1 --><main id="halaman-agenda-1" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img class="w-full h-96 object-cover" 
+                 src="asset/berita1.jpg" 
+                 onerror="this.src='https://placehold.co/1200x600/cccccc/ffffff?text=Gambar+Event+1'; this.onerror=null;"
+                 alt="Gambar Event 1">
+            <div class="p-8 md:p-12">
+                <p class="text-sm text-red-600 font-semibold mb-2">18 September 2025</p>
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Dipusatkan di Gedung Budaya Narmada, Dikbud Lombok Barat Gelar Festival Tunas Bahasa Ibu Tingkat Kabupaten</h1>
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="mb-4">Dinas Pendidikan dan Kebudayaan (Dikbud) Lombok Barat (Lobar) menggelar Festival Tunas Bahasa Ibu (FTBI).
+                                    Kegiatan ini merupakan Program Nasional sebagai upaya revitalisasi bahasa daerah di seluruh Indonesia yang dicanangkan oleh Badan Pengembangan dan Pembinaan Bahasa, Kementerian Pendidikan Dasar dan Menengah.
+
+                                    Kabid Pembinaan Kebudayaan pada Dikbud Lobar Hirman Zulkarnaen menerangkan, tujuan diadakan FTBI ini adalah melestarikan bahasa daerah di seluruh Indonesia yang sangat kaya dan beragam. Mencegah kepunahan bahasa, serta menguatkan identitas bangsa melalui penggunaan bahasa ibu dalam pendidikan dan kehidupan sehari-hari.
+
+                                    Di tingkat Kabupaten khususnya Lombok Barat, pagelaran FTBI dipusatkan kegiatannya di Gedung Seni dan Budaya Jayengrana Narmada, mulai dari tanggal 17-18 September 2025 yang diikuti oleh 34 siswa jenjang Sekolah Dasar, dan 43 siswa jenjang Sekolah Menengah Pertama, dengan 7 (tujuh) mata lomba.
+                                    Tujuh mata lomba itu meliputi pidato bahasa Sasak, puisi bahasa Sasak, bewaran, nembang, menulis aksara Sasak, bebanyolan.
+
+                                    “Kegiatan ini diharapkan sebagai sarana menumbuhkembangkan, memperkenalkan dan menanamkan rasa cinta pada bahasa ibu khususnya bahasa Sasak serta menjaga kelestariannya,”terang Hirman, Kamis, 18 September 2025.
+                                    Dengan diadakan di gedung Budaya Narmada ini tentunya bisa meramalkan atau menghidupkan gedung budaya ini. Sehingga Dikbud pun akan mengadakan berbagai kegiatan</p>
+                    
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <a href="#konten-utama" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Beranda</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Halaman Agenda 2 --><main id="halaman-agenda-2" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img class="w-full h-96 object-cover" 
+                 src="asset/berita 2.jpg" 
+                 onerror="this.src='https://placehold.co/1200x600/bbbbbb/ffffff?text=Gambar+Event+2'; this.onerror=null;"
+                 alt="Gambar Event 2">
+            <div class="p-8 md:p-12">
+                <p class="text-sm text-red-600 font-semibold mb-2">27 September 2025</p>
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Menghadiri Parade Budaya yang dibuka langsung oleh Wakil Ketua Komisi X DPR RI, Bapak H. Lalu Hadrian Irfani, ST., M.Si. (FPKB).</h1>
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="mb-4">Menghadiri Parade Budaya yang dibuka langsung oleh Wakil Ketua Komisi X DPR RI, Bapak H. Lalu Hadrian Irfani, ST., M.Si. (FPKB).
+                                    Acara berlangsung di Gedung Seni dan Budaya Narmada, Lombok Barat dengan mengusung tema:
+                                    “Revitalisasi Budaya Sasak sebagai Modal Sosial Generasi Mendatang.”
+                                    Kegiatan ini turut dihadiri oleh jajaran Dinas Kebudayaan Lombok Barat, Camat, Kapolsek, Danramil Kecamatan Narmada, tokoh agama, tokoh adat, serta kalangan Gen Z.
+                                    Tujuan parade budaya ini adalah untuk merawat dan melestarikan warisan budaya leluhur, yang keberadaannya kini mulai tergerus dan terkontaminasi oleh budaya luar yang tidak sejalan dengan kultur kita..</p>
+                    
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <a href="#konten-utama" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Beranda</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Halaman Agenda 3 --><main id="halaman-agenda-3" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img class="w-full h-96 object-cover" 
+                 src="asset/berita 3.jpg" 
+                 onerror="this.src='https://placehold.co/1200x600/dddddd/ffffff?text=Gambar+Event+3'; this.onerror=null;"
+                 alt="Gambar Event 3">
+            <div class="p-8 md:p-12">
+                <p class="text-sm text-red-600 font-semibold mb-2">2 OKTOBER 2024</p>
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-6">PENGAMANAN ACARA GSMS DI GEDUNG SENI BUDAYA NARMADA KAB. LOBAR</h1>
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="mb-4">Hari rabu, 2 oktober 2024 adalah merupakan puncak acara digelarnya kegiatan Gebyar Gerakan Seniman Masuk Sekolah (GSMS) yang telah berlangsung beberapa hari di Gedung seni dan Budaya "jayengrane" Narmada Kabupaten Lombok Barat.
+                                    Acara tersebut dihadiri oleh Pj. SEKDA Lobar, Kepala DIKBUD Lobar, beberapa kepala OPD Lingkup PEMDA Lobar, Direktur Pengembangan dan Pemanfaatan Kebudayaan bersama tim GSMS dari Kementerian DIKBUD dan RISTEK RI, perwakilan dari seluruh sekolah yang ada di Kabupaten Lombok Barat, serta tamu dari instansi, BUMD  terkait, dan undangan lainnya.
+                                    Gebyar GSMS kali ini bertemakan Begawe karye sebagai penguat identitas bangsa.
+                                    KASAT POLPP Lobar diwakili oleh Sekretaris SATPOLPP Lobar turut hadir pula sebagai undangan, dan Anggota SATPOLPP Lobar yang bertugas adalah anggota dari regu I (satu) dan staff bidang sekretariat sebanyak 10 orang dan 1 orang anggota PTI dipimpin oleh perwira Kasie PAMWAL bersama dengan aparat dari TNI dan POLRI guna menjaga keamanan, ketertiban dan fasilitas umum, agar tamu dan undangan dari luar daerah yang datang, merasakan ketenangan dan kenyamanan selama mengikuti jalannya acara tersebut.
+                                    Kegiatan pengamanan acara tersebut berlangsung dari pukul 07.00 s/d 13.00 WITA..</p>
+                    
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <a href="#konten-utama" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Beranda</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- ===== HALAMAN KONTEN BARU (TERSEMBUNYI) ===== --><!-- Halaman Profil --><main id="halaman-profil" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden p-8 md:p-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Profil Gedung seni dan Budaya Jayengrana Narmada</h1>
+            <div class="prose prose-lg max-w-none text-gray-700">
+                <p class="mb-4">Gedung Seni dan Budaya Narmada adalah fasilitas yang terletak di Kecamatan Narmada, Lombok Barat,namun berpotensi menjadi pusat kegiatan seni dan budaya. Meskipun pernah digunakan untuk acara seperti Peresean dan lomba seni, kondisinya kini memprihatinkan dan dinilai tidak dimanfaatkan secara optimal sesuai fungsinya sebagai ruang ekspresi dan pelestarian warisan budaya lokal. .</p>
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <a href="#konten-utama" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Beranda</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Halaman Warisan Budaya --><main id="halaman-warisan" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden p-8 md:p-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Warisan Budaya</h1>
+            <div class="prose prose-lg max-w-none text-gray-700">
+                <p class="mb-4">Warisan budaya di Narmada mencakup Taman Narmada (cagar budaya bersejarah dan objek wisata) dan Gedung Budaya Narmada (yang berfungsi sebagai pusat kegiatan seni dan budaya lokal). Meskipun memiliki potensi besar sebagai pusat budaya dan wisata di kawasan yang telah ditetapkan sebagai zona wisata eksotis dan budaya, Gedung Budaya Narmada sempat mengalami kondisi kurang terawat namun kini mulai dihidupkan kembali dengan berbagai kegiatan seni seperti Peresean dan lomba seni. </p>
+                
+                <!-- Menambahkan grid navigasi di halaman warisan utama -->
+                <h2 class="text-2xl font-bold mt-8 mb-4">Jelajahi Kategori Warisan Budaya</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 not-prose"> <!-- 'not-prose' untuk me-reset styling grid -->
+                    <!-- Kategori 1 --><a href="#halaman-cagar-budaya" class="page-link group">
+                        <div class="bg-gray-50 rounded-lg shadow-lg p-6 text-center flex flex-col items-center justify-center h-48 hover:shadow-xl transition-shadow duration-300">
+                            <svg class="h-16 w-16 text-red-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6-4h.01M12 16h.01" />
+                            </svg>
+                            <h3 class="text-lg font-bold group-hover:text-red-700 text-gray-900">Cagar Budaya</h3>
+                        </div>
+                    </a>
+                    <!-- Kategori 2 --><a href="#halaman-warisan-tak-benda" class="page-link group">
+                        <div class="bg-gray-50 rounded-lg shadow-lg p-6 text-center flex flex-col items-center justify-center h-48 hover:shadow-xl transition-shadow duration-300">
+                             <svg class="h-16 w-16 text-red-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 00-2-2H5z" />
+                            </svg>
+                            <h3 class="text-lg font-bold group-hover:text-red-700 text-gray-900">Warisan budaya Tak Benda</h3>
+                        </div>
+                    </a>
+                    <!-- Kategori 3 --><a href="#halaman-seni-tradisi" class="page-link group">
+                        <div class="bg-gray-50 rounded-lg shadow-lg p-6 text-center flex flex-col items-center justify-center h-48 hover:shadow-xl transition-shadow duration-300">
+                            <svg class="h-16 w-16 text-red-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10m0-2s-1 2-3 4m3-4s1 2 3 4m0 0s-1 2-3 4m0 0s-1 2-3 4m0 0s-1 2-3 4" />
+                            </svg>
+                            <h3 class="text-lg font-bold group-hover:text-red-700 text-gray-900">Seni dan Tradisi Budaya</h3>
+                        </div>
+                    </a>
+                    <!-- Kategori 4 --><a href="#halaman-kuliner" class="page-link group">
+                        <div class="bg-gray-50 rounded-lg shadow-lg p-6 text-center flex flex-col items-center justify-center h-48 hover:shadow-xl transition-shadow duration-300">
+                            <svg class="h-16 w-16 text-red-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0c-.454-.303-.977-.454-1.5-.454V5.454c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0c.454.303.977.454 1.5.454v10.092zM15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <h3 class="text-lg font-bold group-hover:text-red-700 text-gray-900">Kuliner Tradisional</h3>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <a href="#konten-utama" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Beranda</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== HALAMAN KATEGORI WARISAN (BARU) ===== -->
+
+    <!-- Halaman Cagar Budaya --><main id="halaman-cagar-budaya" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img class="w-full h-96 object-cover" 
+                 src="asset/cagarbudaya1.webp" 
+                 onerror="this.src='https://placehold.co/1200x600/cccccc/ffffff?text=Gambar+Cagar+Budaya'; this.onerror=null;"
+                 alt="Gambar Cagar Budaya">
+            <div class="p-8 md:p-12">
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Cagar Budaya</h1>
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="mb-4">Ini adalah halaman untuk Cagar Budaya. Anda bisa menambahkan teks dan deskripsi lengkap di sini. Contohnya adalah Taman Narmada.</p>
+                    <p>Taman Narmada
+                        Taman Narmada yang sekarang ini adalah hasil pembangunan dan serangkaian perbaikan/pemugaran yang berlangsung dari waktu ke waktu. Sewaktu para petugas dari Direktorat Perlindungan dan Pembinaan Peninggalan Sejarah dan Purbakala bersama dengan para petugas Kantor Wilayah Depdikbud Nusa Tenggara Barat meneliti dan mengumpulkan data sebagai langkah awal pemugaran, mereka berpendapat bahwa pemugaran secara menyeluruh tidak mungkin dilakukan. Banyak bagian yang telah rusak terutama tebing-tebing kolam, taman, pagar maupun bangunan. Pada tahun 1980 sampai 1988 rekonstruksi Taman Narmada dapat diselesaikan. </p>
+                    <p>Setelah direkonstruksi oleh pemerintah melalui Ditjen Kebudayaan, Direktorat Perlindungan dan pembinaan Peninggalan Sejarah dan Purbakala, Departemen Pendidikan dan Kebudayaan, Taman Narmada dijadikan sebagai kompleks bangunan cagar budaya dengan daftar induk inventarisasi peninggalan sejarah dan purbapakala pusat nomor 1839. Dengan demikian, sesuai dengan peraturan yang berlaku kelestarian Taman Narmada dilindungi oleh pemerintah.</p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <a href="#halaman-warisan" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Warisan Budaya</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Halaman Warisan Budaya Tak Benda --><main id="halaman-warisan-tak-benda" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img class="w-full h-96 object-cover" 
+                 src="asset/warisanbudaya2.jpeg" 
+                 onerror="this.src='https://placehold.co/1200x600/bbbbbb/ffffff?text=Gambar+Warisan+Tak+Benda'; this.onerror=null;"
+                 alt="Gambar Warisan Budaya Tak Benda">
+            <div class="p-8 md:p-12">
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Warisan Budaya Tak Benda</h1>
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="mb-4">Perang Topat adalah tradisi tahunan di Pura Lingsar, Lombok, Nusa Tenggara Barat, yang menjadi simbol perdamaian dan keharmonisan antara umat Muslim dan Hindu. Sejarahnya berawal dari konflik pembangunan pura yang berakhir dengan kesepakatan untuk tidak lagi menggunakan kekerasan fisik, melainkan "perang" simbolis dengan saling melempar ketupat. </p>
+                    <p>Perang topat adalah sebuah acara adat yang diadakan di Pura Lingsar, Lombok, Nusa Tenggara Barat, Indonesia. Perang ini merupakan simbol perdamaian antara umat Muslim dan Hindu di Lombok. Acara ini dilakukan pada sore hari, setiap bulan purnama ke tujuh dalam penanggalan Suku Bali. Sore hari yang merupakan puncak acara yang dilakukan setelah salat ashar atau dalam bahasa Sasak “rarak kembang waru” (gugur bunga waru). Tanda itu dipakai oleh orang tua dulu untuk mengetahui waktu salat Ashar. Ribuan umat Hindu dan Muslim memenuhi Pura Lingsar, dua komunitas umat beda kepercayaan ini menggelar prosesi upacara Puja Wali, sebagai ungkapan atas puji syukur limpahan berkah dari sang pencipta. Dilaksanakan sekali dalam setahun sebagai simbol keharmonisan dalam kehidupan beragama</p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <a href="#halaman-warisan" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Warisan Budaya</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Halaman Seni dan Tradisi Budaya --><main id="halaman-seni-tradisi" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img class="w-full h-96 object-cover" 
+                 src="asset/senidantradisi3.jpg" 
+                 onerror="this.src='https://placehold.co/1200x600/dddddd/ffffff?text=Gambar+Seni+Tradisi'; this.onerror=null;"
+                 alt="Gambar Seni dan Tradisi Budaya">
+            <div class="p-8 md:p-12">
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Seni dan Tradisi Budaya</h1>
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="mb-4">Ini adalah halaman untuk Seni dan Tradisi Budaya. Anda bisa menambahkan teks dan deskripsi lengkap di sini. Contohnya adalah Gendang Beleq.</p>
+                    <p>Gendang Beleq adalah salah satu alat musik tradisional Suku Sasak di Lombok yang dimainkan secara berkelompok. "Beleq" berarti besar, merujuk pada ukuran gendang yang besar. Kesenian ini awalnya digunakan untuk menyemangati prajurit yang pergi berperang, namun kini lebih sering digunakan untuk menyambut tamu kehormatan, perayaan, dan upacara adat.</p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <a href="#halaman-warisan" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Warisan Budaya</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Halaman Kuliner Tradisional --><main id="halaman-kuliner" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img class="w-full h-96 object-cover" 
+                 src="asset/kuliner.jpg" 
+                 onerror="this.src='https://placehold.co/1200x600/eeeeee/ffffff?text=Gambar+Kuliner+Tradisional'; this.onerror=null;"
+                 alt="Gambar Kuliner Tradisional">
+            <div class="p-8 md:p-12">
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Kuliner Tradisional</h1>
+                <div class="prose prose-lg max-w-none text-gray-700">
+                    <p class="mb-4">Ini adalah halaman untuk Kuliner Tradisional. Anda bisa menambahkan teks dan deskripsi lengkap di sini. Contohnya adalah Ayam Taliwang.</p>
+                    <p>Ayam Taliwang adalah makanan khas Lombok yang terbuat dari ayam kampung muda yang dibakar dengan bumbu pedas khas. Biasanya disajikan bersama Plecing Kangkung dan Beberuk Terong. Cita rasanya yang pedas, gurih, dan sedikit manis menjadikannya salah satu kuliner paling ikonik dari Nusa Tenggara Barat.</p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <a href="#halaman-warisan" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Warisan Budaya</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Halaman Agenda (Semua) --><main id="halaman-agenda" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden p-8 md:p-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Semua Agenda Budaya</h1>
+            <div class="prose prose-lg max-w-none text-gray-700">
+                <p class="mb-4">Ini adalah halaman daftar semua agenda </p>
+                <!-- Nanti di sini bisa diisi daftar agenda yang lebih lengkap --><ul class="list-disc pl-5 space-y-2">
+                    <li><a href="#halaman-agenda-1" class="page-link text-red-700 hover:underline">Dipusatkan di Gedung Budaya Narmada, Dikbud Lombok Barat Gelar Festival Tunas Bahasa Ibu Tingkat Kabupaten</a></li>
+                    <li><a href="#halaman-agenda-2" class="page-link text-red-700 hover:underline">Menghadiri Parade Budaya yang dibuka langsung oleh Wakil Ketua Komisi X DPR RI, Bapak H. Lalu Hadrian Irfani, ST., M.Si. (FPKB).</a></li>
+                    <li><a href="#halaman-agenda-3" class="page-link text-red-700 hover:underline">PENGAMANAN ACARA GSMS DI GEDUNG SENI BUDAYA NARMADA KAB. LOBAR</a></li>
+                    <li>Agenda Lainnya...</li>
+                </ul>
+            </div>
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <a href="#konten-utama" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Beranda</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Halaman Galeri (Semua) --><main id="halaman-galeri" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden p-8 md:p-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Galeri Budaya</h1>
+            <div class="prose prose-lg max-w-none text-gray-700 mb-8">
+                <p>Dokumentasi pelaksanaan kegiatan Budaya, Seni dan Tradisi Lingkup Pemerintahan Kabupaten Lombok Barat</p>
+            </div>
+            <!-- Grid galeri yang lebih besar --><div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="rounded-lg shadow-md overflow-hidden h-64">
+                    <img src="asset/galeri1.jpg" alt="Galeri 1" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/999999/ffffff?text=Galeri+1'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-64">
+                    <img src="asset/galeri2.jpg" alt="Galeri 2" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/aaaaaa/ffffff?text=Galeri+2'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-64">
+                    <img src="asset/galeri3.jpg" alt="Galeri 3" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/bbbbbb/ffffff?text=Galeri+3'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-64">
+                    <img src="asset/galeri4.jpg" alt="Galeri 4" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/cccccc/ffffff?text=Galeri+4'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-64">
+                    <img src="asset/galeri5.jpg" alt="Galeri 5" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/dddddd/ffffff?text=Galeri+5'; this.onerror=null;">
+                </div>
+                 <div class="rounded-lg shadow-md overflow-hidden h-64">
+                    <img src="asset/galeri6.jpg" alt="Galeri 6" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/eeeeee/ffffff?text=Galeri+6'; this.onerror=null;">
+                </div>
+                <div class="rounded-lg shadow-md overflow-hidden h-64">
+                    <img src="asset/galeri7.jpg" alt="Galeri 7" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/600x400/f0f0f0/ffffff?text=Galeri+7'; this.onerror=null;">
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <a href="#konten-utama" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Beranda</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Halaman Kontak --><main id="halaman-kontak" class="hidden max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden p-8 md:p-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Hubungi Kami</h1>
+            <div class="prose prose-lg max-w-none text-gray-700">
+                <p class="mb-4">Ini adalah halaman kontak. Anda dapat menemukan informasi kontak kami di bawah ini:</p>
+                <ul class="list-none pl-0 space-y-2">
+                    <li><strong>Alamat:</strong> Jl. Suranadi, Lembuak, Kec. Narmada, Kabupaten Lombok Barat, Nusa Tenggara Bar. 83371</li>
+                    <li><strong>Email:</strong>  dikbudlobar.kepeg@gmail.com</li>
+                    <li><strong>Telepon:</strong> (0370) 681540</li>
+                </ul>
+
+                <!-- ===== Peta Google Maps ===== -->
+                <div class="not-prose mt-8 rounded-lg shadow-md overflow-hidden">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.394607739949!2d116.2088824147831!3d-8.558334493852002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dcc2aa2a093a3ab%3A0xb6973e3308a3d13!2sGedung%20Budaya%20Narmada!5e0!3m2!1sen!2sid!4v1678888888888!5m2!1sen!2sid" 
+                        class="w-full" 
+                        height="450" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <!-- ============================ -->
+
+                <p class="mt-6">Atau Anda dapat mengisi formulir kontak di bawah ini (fitur belum diimplementasikan).</p>
+            </div>
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <a href="#konten-utama" class="page-link font-semibold text-red-700 hover:text-red-900 transition duration-150">&larr; Kembali ke Beranda</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== Footer ===== --><footer class="bg-gray-800 text-gray-300 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Kolom 1: Tentang Kami --><div>
+                    <h3 class="text-xl font-bold text-white mb-4">Gedung Seni dan Budaya Jayengrana Narmada</h3>
+                    <p class="mb-2">BIDANG PEMBINAAN KEBUDAYAAN
+                                    DINAS PENDIDIKAN DAN KEBUDAYAAN
+                                    KABUPATEN LOMBOK BARAT</p>
+                    <p class="text-sm mb-2">
+                        Alamat: Jl. Suranadi, Lembuak, Kec. Narmada, Kabupaten Lombok Barat, Nusa Tenggara Bar. 83371
+                    </Sip>
+                    <p class="text-sm mb-2">Email: dikbudlobar.kepeg@gmail.com</p>
+                    <p class="text-sm">Telepon: (0370) 681540</p>
+                </div>
+                
+                <!-- Kolom 2: Tautan Terkait --><div>
+                    <h3 class="text-xl font-bold text-white mb-4">Tautan Terkait</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm hover:text-white transition">DINAS PENDIDIKAN DAN KEBUDAYAAN LOMBOK BARAT</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition">Kementerian Pendidikan & Kebudayaan</a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition"></a></li>
+                        <li><a href="#" class="text-sm hover:text-white transition"></a></li>
+                    </ul>
+                </div>
+                
+                <!-- Kolom 3: Media Sosial --><div>
+                    <h3 class="text-xl font-bold text-white mb-4">Ikuti Kami</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.772-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram">
+                           <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12 2C8.74 2 8.333.014 7.053.072 5.775.132 4.905.333 4.14.63c-.784.306-1.457.718-2.123 1.385S.935 3.356.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.014 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.784.718 1.457 1.385 2.123s1.339.814 2.123 1.12c.765.297 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.014 4.947-.072c1.277-.06 2.148-.261 2.913-.558.784-.306 1.457-.718 2.123-1.385s.814-1.339 1.12-2.123c.297-.765.499-1.636.558-2.913C23.988 15.667 24 15.26 24 12s-.014-3.667-.072-4.947c-.06-1.277-.261-2.148-.558-2.913-.306-.784-.718-1.457-1.385-2.123S20.644.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.163c3.203 0 3.585.012 4.85.07 1.17.053 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.058 1.265.07 1.646.07 4.85s-.012 3.585-.07 4.85c-.053 1.17-.249 1.805-.413 2.227-.217.562-.477.96-.896 1.382-.42.419-.819.679-1.381.896-.422.164-1.057.36-2.227.413-1.265.058-1.646.07-4.85.07s-3.585-.012-4.85-.07c-1.17-.053-1.805-.249-2.227-.413-.562-.217-.96-.477-1.382-.896-.419-.42-.679-.819-.896-1.381-.164-.422-.36-1.057-.413-2.227-.058-1.265-.07-1.646-.07-4.85s.012-3.585.07-4.85c.053 1.17.249 1.805.413 2.227.217-.562.477.96.896 1.382.42-.419.819.679 1.381-.896.422-.164 1.057.36 2.227.413C8.415 2.175 8.797 2.163 12 2.163zm0 3.472a6.364 6.364 0 100 12.728 6.364 6.364 0 000-12.728zm0 10.162a3.799 3.799 0 110-7.598 3.799 3.799 0 010 7.598zm6.566-7.633a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter">
+                           <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                               <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                           </svg>
+                        </a>
+                         <a href="#" class="text-gray-400 hover:text-white transition" aria-label="YouTube">
+                           <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                               <path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.71 22 12 22 12s0 3.29-.418 4.814a2.506 2.506 0 01-1.768 1.768c-1.522.418-7.814.418-7.814.418s-6.292 0-7.814-.418a2.506 2.506 0 01-1.768-1.768C2.002 15.29 2 12 2 12s0-3.29.418-4.814a2.506 2.506 0 011.768-1.768C5.708 5.002 12 5.002 12 5.002s6.292 0 7.814.416zM9.546 15.582V8.418L15.818 12l-6.272 3.582z" clip-rule="evenodd" />
+                           </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Garis Pemisah dan Copyright --><div class="mt-12 pt-8 border-t border-gray-700 text-center text-sm">
+                <p>&copy; 2025 Gedung Seni dan Budaya Jayengrana Narmada. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script untuk toggle menu mobile dan navigasi halaman --><script>
+        document.getElementById('mobile-menu-button').onclick = function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        };
+
+        // --- SCRIPT NAVIGASI HALAMAN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dapatkan semua elemen <main> yang berfungsi sebagai "halaman"
+            const pages = document.querySelectorAll('main');
+            // Dapatkan semua tautan yang memicu navigasi
+            const pageLinks = document.querySelectorAll('.page-link');
+
+            function showPage(targetId) { // targetId akan berupa hash, e.g., "#konten-utama"
+                // Sembunyikan semua halaman
+                pages.forEach(page => {
+                    page.classList.add('hidden');
+                });
+
+                // Tampilkan halaman yang dituju
+                const targetPage = document.querySelector(targetId);
+                if (targetPage) {
+                    targetPage.classList.remove('hidden');
+                } else {
+                    // Jika halaman tidak ditemukan, tampilkan halaman utama
+                    document.getElementById('konten-utama').classList.remove('hidden');
+                }
+                // Selalu scroll ke atas saat berpindah halaman
+                window.scrollTo(0, 0);
+            }
+
+            // Tambahkan event listener untuk setiap tautan navigasi
+            pageLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault(); // Mencegah perilaku default tautan anchor
+                    const targetId = link.getAttribute('href'); // e.g., "#halaman-agenda-1"
+                    showPage(targetId);
+                });
+            });
+
+            // Tampilkan halaman utama saat pertama kali dimuat
+            // Periksa apakah URL memiliki hash, jika tidak, tampilkan #konten-utama
+            const currentHash = window.location.hash || '#konten-utama';
+            showPage(currentHash);
+
+            // --- SCRIPT HERO SLIDER OTOMATIS ---
+            const heroSlider = document.querySelector('.hero-scroller');
+            let currentSlide = 0;
+            const slides = heroSlider ? heroSlider.querySelectorAll('div.flex-shrink-0') : [];
+            const totalSlides = slides.length;
+
+            if (heroSlider && totalSlides > 1) {
+                setInterval(() => {
+                    // Hitung slide berikutnya, kembali ke 0 jika sudah di akhir
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    
+                    // Dapatkan lebar satu slide (lebar kontainer)
+                    const slideWidth = heroSlider.clientWidth;
+                    
+                    // Pindahkan scroll ke slide berikutnya dengan mulus
+                    heroSlider.scrollTo({
+                        left: slideWidth * currentSlide,
+                        behavior: 'smooth'
+                    });
+
+                }, 5000); // Ganti slide setiap 5 detik (5000 milidetik)
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
